@@ -8,7 +8,7 @@ namespace JitsDataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly JitsStoreContext _dbcontext;
+        protected readonly JitsStoreContext _dbcontext;
 
         internal DbSet<T> dbSet;
         public Repository(JitsStoreContext dbcontext)

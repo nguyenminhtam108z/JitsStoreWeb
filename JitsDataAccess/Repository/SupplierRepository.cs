@@ -6,10 +6,10 @@ namespace JitsDataAccess.Repository
 {
     public class SupplierRepository : Repository<Supplier>, ISupplierRepository
     {
-        private readonly JitsStoreContext _dbcontext;
-        public SupplierRepository(JitsStoreContext dbcontext)
+        private readonly JitsStoreContext _context;
+        public SupplierRepository(JitsStoreContext dbcontext) : base(dbcontext)
         {
-            _dbcontext = dbcontext;
+            _context = dbcontext;
         }
     }
 }
