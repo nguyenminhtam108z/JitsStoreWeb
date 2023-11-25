@@ -12,14 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<JitsStoreContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICacheRedis, CacheService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddStackExchangeRedisCache(redisOptions =>
 {
 	string connection = builder.Configuration
-		.GetConnectionString("Redis");
+		.GetConnectionString("localhost:6379");
 	redisOptions.Configuration = connection;
 });
+
 var app = builder.Build();
 
 app.UseSwagger();

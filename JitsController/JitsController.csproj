@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.7.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
@@ -17,5 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\JitsDataAccess\JitsDataAccess.csproj" />
   </ItemGroup>
-
+	<ItemGroup>
+		<!-- Workaround for https://github.com/dotnet/runtime/issues/63467 -->
+		<SuggestedBindingRedirects Include="Microsoft.Extensions.Hosting, Culture=neutral, PublicKeyToken=adb9793829ddae60" MaxVersion="$(MajorVersion).$(MinorVersion).0.$(ServicingVersion)" />
+	</ItemGroup>
 </Project>

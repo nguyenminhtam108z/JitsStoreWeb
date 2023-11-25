@@ -1,4 +1,5 @@
 ﻿using JitsDataAccess.Repository.IRepository;
+using JitsModels.Models;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;

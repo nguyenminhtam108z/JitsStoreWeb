@@ -1,3 +1,4 @@
+using JitsDataAccess.Data;
 using JitsDataAccess.Repository.IRepository;
 using JitsModels.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,13 @@ namespace JitsController.Controllers
     public class SupplierController : ControllerBase
     {
         private ISupplierRepository _srRepo;
-        private readonly ICacheRedis _cacheService;
-        public SupplierController(ISupplierRepository srRepo , ICacheRedis cacheService)
+		protected readonly JitsStoreContext _dbcontext;
+		private readonly ICacheRedis _cacheService;
+        public SupplierController(ISupplierRepository srRepo , ICacheRedis cacheService , JitsStoreContext dbContext)
         {
             _srRepo = srRepo;
             _cacheService = cacheService;
+            _dbcontext = dbContext;
         }
 
         [HttpGet]
@@ -33,5 +36,19 @@ namespace JitsController.Controllers
             _cacheService.SetData<IEnumerable<Supplier>>("supplier", cacheData, expiryTime);
             return Ok(cacheData);
         }
-    }
+
+        [HttpPost]
+		[Route("api/AddSupplier")]
+        public IActionResult AddSupplier(Supplier supplier)
+        {
+            var add = _dbcontext.Suppliers.Add(supplier);
+            var expriTime = DateTimeOffset.Now.AddSeconds(30);
+            _cacheService.SetData<Supplier>($"supplier{supplier.SupplierId}", add.Entity, expriTime);
+            _dbcontext.SaveChanges();
+
+            return Ok(add.Entity);
+
+
+		}
+	}
 }
